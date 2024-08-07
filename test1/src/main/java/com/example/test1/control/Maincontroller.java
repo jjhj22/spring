@@ -92,7 +92,7 @@ public class Maincontroller {
 //		return "member/signUp";
 //	}
 	
-//	래그 epdlxj qkedkdhsms qkdqjq 1.
+//	form 데이터 받아오는 방법 1.
 //	@PostMapping("/signUp")
 //	public String singUpSave(@RequestParam("id") String id, @RequestParam("pw") String pw, 
 //	@RequestParam("tel") String tel, @RequestParam("birth") 
