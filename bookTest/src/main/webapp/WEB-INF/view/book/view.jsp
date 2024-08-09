@@ -12,10 +12,19 @@
 
 <link rel="stylesheet" href="/css/info.css">
 <script src="/javascript/info.js"></script>
+<script>
+
+	inputType=["text", "text", "text", "number", "number"];
+	inputName=["bookTitle", "bookAuthor", "publisher", "bookPage", "bookCost"];
+	
+
+</script>
 
 </head>
 <body>
 
+		<form id="fm" method="get" action="/book/delete"> 
+		<input type="hidden" name="id" value="${book.bookId }">
 	<div id="wrap">
 		<a href="/">HOME</a>
 		<table id="viewBox">
@@ -48,10 +57,11 @@
 			<tr>
 				<td colspan="2">
 					<button type="button" id="modify">수정</button>
-					<button type="button" id="del">삭제</button>
+					<button type="button" id="del" data-id="${book.bookId }">삭제</button>
 				</td>
 			</tr>
 		</table>
 	</div>
+	</form>
 </body>
 </html>
