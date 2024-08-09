@@ -21,6 +21,25 @@ public class CoffeDao {
 		this.db = jdbc;
 	}
 	
+	public CoffeDto findId(int id) {
+		String sql="select * from coffe where coffe_id=?";
+		
+		CoffeDto data=db.queryForObject(sql,
+				new RowMapper<CoffeDto>() {
+			@Override
+			public CoffeDto mapRow(ResultSet rs, int rowNum) throws SQLException{
+				CoffeDto coffedto = new CoffeDto();
+				coffedto.setItemName(rs.getString("item_name"));
+				coffedto.setPrice(rs.getInt("price"));
+				coffedto.setDecaffein(rs.getInt("decaffein"));
+				coffedto.setCoffeId(rs.getInt("coffe_id"));
+				return coffedto;
+			}
+		}
+		     , id);
+		return data;
+	}
+	
 	public List<CoffeDto> select(){
 		String sql="select *from coffe";
 		List<CoffeDto>list=db.query(sql, new CoffeDtoRowMapper());
@@ -42,6 +61,7 @@ public class CoffeDao {
 			coffedto.setDecaffein(rs.getInt("decaffein"));
 			coffedto.setItemName(rs.getString("item_name"));
 			coffedto.setPrice(rs.getInt("price"));
+			coffedto.setCoffeId(rs.getInt("coffe_id"));
 			return coffedto;
 		}
 		

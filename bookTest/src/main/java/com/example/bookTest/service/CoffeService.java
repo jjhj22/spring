@@ -18,6 +18,13 @@ public class CoffeService {
 	public CoffeService(CoffeDao coffeDao) {
 		this.coffeDao=coffeDao;
 	}
+	
+	public CoffeDto getCoffe(int id) {
+		if(id != 0) {
+			return coffeDao.findId(id);
+		}
+		return null;
+	}
 	public List<CoffeDto> selectAll(){
 		return coffeDao.select();
 	}
