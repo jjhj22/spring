@@ -42,7 +42,7 @@ public class MovieController {
 	@PostMapping("/signUp")
 	public String signup(@Valid MovieMember movieMember, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
-			System.out.println("유효하지 않은값이 입력되었다");
+			System.out.println("유효하지 않은값이 입력되었다.");
 			
 			return "movie/member/join";
 		}
