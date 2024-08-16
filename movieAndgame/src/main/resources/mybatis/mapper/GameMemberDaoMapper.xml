@@ -5,6 +5,18 @@
 
 <mapper namespace="com.movieAndgame.DAO.GameMemberDao">
 
+		<select id="login" resultType="com.movieAndgame.Dto.GameMember"
+				parameterType="com.movieAndgame.Dto.GameMember">
+			select email, nickname 
+			from game_member 
+			where email=#{email} and password=#{password}
+			
+	</select>
+
+	<select id="findAllEmail" resultType="java.lang.String"> <!-- resultType을 string으로 적어도 된다 -->
+		select email from game_member;
+	</select>
+
 	<insert id="insert" parameterType="com.movieAndgame.Dto.GameMember">
 		insert into game_member(email, password, nickname)
 			values(#{email}, #{password}, #{nickname})
