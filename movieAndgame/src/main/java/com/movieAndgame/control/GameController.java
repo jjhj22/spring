@@ -12,63 +12,67 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.movieAndgame.Dto.GameMember;
-
+import com.movieAndgame.Dto.GameMemberLogin;
+import com.movieAndgame.Dto.MovieMember;
 import com.movieAndgame.service.GameMemberService;
 
 @Controller
 @RequestMapping("/game")
 public class GameController {
-	
+
 	@Autowired
 	private GameMemberService gameMemberService;
 	
+	// localhost/game/index 매핑
 	@GetMapping("/index")
-	public String Home(Model model) {
+	public String home(Model model) {
 		
 		return "game/index";
 	}
 	
 	@GetMapping("/login")
-	public String loginHome(Model model) {
+	public String login(Model model) {
 		
-		model.addAttribute("member", new GameMember());
-		
+		model.addAttribute("gameMemberLogin" , new GameMemberLogin());		
 		return "game/member/login";
 	}
 	
+	//회원 가입 양식 페이지 요청
 	@GetMapping("/signUp")
-	public String memberShip(Model model) {
-		model.addAttribute("memberShip", new GameMember());
-		
+	public String signup(Model model) {
+		model.addAttribute("gameMember",new GameMember());
 		return "game/member/join";
 	}
 	
-	
-	// 회원가입 작성 후
 	@PostMapping("/signUp")
-	public String signup(@Valid GameMember gameMember, BindingResult bindingResult, Model model) {
+	public String signUp(@Valid GameMember gameMemeberDto,
+			BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
-			System.out.println("유효하지 않은값이 입력되었다");
+			System.out.println("유효하지 않은값이 입력되었다.");
 			
 			return "game/member/join";
 		}
-		boolean isDup = gameMemberService.signUpSave(gameMember);
-		if(isDup) {
-			bindingResult.rejectValue("email", "error.email", "가입된 이메일입니다");
+		
+		boolean isDup = gameMemberService.joinSave(gameMemeberDto);
+		
+		
+		if( isDup ) {
+			bindingResult.rejectValue("email", "error.email","이미 가입된 이메일입니다.");
 			return "game/member/join";
 		}
-		gameMemberService.signUpSave(gameMember);
 		
-		return "redirect:login";
+		return "redirect:/game/login";
+		
 	}
+
 	
 	@PostMapping("/signIn")
-	public String signIn(GameMember gameMember, HttpSession session
-			,Model model) {
-		GameMember user = gameMemberService.login(gameMember);
-		if(user==null) {
-			model.addAttribute("member", gameMember);
-			model.addAttribute("fail","<script> alert('이메일 또는 비밀번호가 잘못되었습니다');</script>");
+	public String signIn(GameMemberLogin gameMemberLogin, HttpSession session, Model model) {
+		
+		GameMember user = gameMemberService.login(gameMemberLogin);
+		if(user == null) {
+			model.addAttribute("member", gameMemberLogin);
+			model.addAttribute("lose", "<script> alert('이메일 또는 비밀번호가 잘못되었습니다.'); </script>");
 			return "game/member/login";
 		}
 		session.setAttribute("user", user);
@@ -76,4 +80,11 @@ public class GameController {
 		return "redirect:/game/index";
 	}
 	
+	
+	
+	@GetMapping("/logout")
+	public String out(HttpSession session) {
+		session.removeAttribute("user");
+		return " redirect:/game/index";
+	}
 }

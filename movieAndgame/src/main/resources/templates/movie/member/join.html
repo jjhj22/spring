@@ -28,15 +28,15 @@
 				<div class="inputField">
 					<input type="password" th:field="*{password}">
 					<label th:for="password">비밀번호
-					<b id="pw1"></b>
-					</label>		
+						<b id="pw1"></b>
+					</label>
+					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>		
 				</div>
 				<div class="inputField">
 					<input type="password" id="chk">
 					<label th:for="chk">비밀번호 확인
-					<b id="pw2"></b>
-					</label>
-					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>		
+						<b id="pw2"></b>		
+					</label>		
 				</div>
 				<div class="inputField">
 					<input type="text" th:field="*{name}">
@@ -44,8 +44,8 @@
 				</div>
 				<div class="inputField">
 					<input type="text" th:field="*{tel}">
-					<label th:for="tel">연락처</label>
-					<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>		
+					<label th:for="tel">연락처</label>	
+					<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}" class="fieldError"></p>	
 				</div>
 				<div class="inputField">
 					<b>생일 년월</b>

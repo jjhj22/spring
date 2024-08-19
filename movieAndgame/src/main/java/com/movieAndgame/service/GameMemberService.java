@@ -6,32 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieAndgame.DAO.GameMemberDao;
+import com.movieAndgame.DAO.GameMemberDaoImpl;
 import com.movieAndgame.Dto.GameMember;
+import com.movieAndgame.Dto.GameMemberLogin;
 
 @Service
 public class GameMemberService {
-	
 	@Autowired
-	private GameMemberDao gameMemberDao;
+	private GameMemberDaoImpl gameMemberDao;
 	
-	public GameMember login(GameMember gameMember) {
+	public GameMember login(GameMemberLogin gameMemberDto) {
 		
-		return gameMemberDao.login(gameMember);
+		return gameMemberDao.login(gameMemberDto);
 	}
 	
-	//회원가입 데이터베이스 저장
-	public boolean signUpSave(GameMember gameMember) {
+	public boolean joinSave(GameMember gameMemberDto) {
 		
 		
 		List<String> emailList = gameMemberDao.findAllEmail();
 		
-		if(emailList.contains(gameMember.getEmail())) {
+		if( emailList.contains( gameMemberDto.getEmail()) )
 			return true;
-		}
-		gameMemberDao.insert(gameMember);
+		
+		
+		
+		
+		gameMemberDao.insert(gameMemberDto);
+		
+		
 		return false;
 	}
-	
-	
-	
 }

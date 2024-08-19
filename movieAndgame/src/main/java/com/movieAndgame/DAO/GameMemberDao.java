@@ -11,7 +11,7 @@ public interface GameMemberDao {
 	
 	public int insert(GameMember gameMember);
 	
-	public List<String> findAllEmail();
+	
 	
 	public GameMember login(GameMember gameMember);
 }
